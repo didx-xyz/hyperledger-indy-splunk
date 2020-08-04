@@ -1,6 +1,6 @@
 # Splunk app for Hyperledger Indy
 
-Hyperledger Indy app for Splunk offers an option to visualize _Hyperledger Indy_ metrics data. Splunk Indy helps you to gain deeper security and operational visibility into your Hyperledger Indy infrastructure by monitoring Hyperledger Indy networks.
+Hyperledger Indy app for Splunk offers an option to visualize _Hyperledger Indy_ metrics data. Splunk Indy helps you to gain deeper security and operational visibility into a Hyperledger Indy infrastructure by monitoring Hyperledger Indy network nodes.
 * * *
 
 ### Documentation
