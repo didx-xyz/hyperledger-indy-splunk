@@ -23,7 +23,7 @@ Indy app for Splunk offers an option to visualize _Hyperledger Indy_ metrics dat
 
 ## Installation
 
-| Splunk version | Wazuh version     | Installation                                                   |
+| Splunk version | Splunk Indy version     | Installation                                                   |
 | :------------: | :---------------: | :--------------------------------------------------------------|
 |      8     |       1.0.0       | <xyz> |
 
