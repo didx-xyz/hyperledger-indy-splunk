@@ -16,7 +16,7 @@ Install the app
 ## Contribute
 
 If you want to contribute to our project please don't hesitate to send a pull request. 
-You can also join [Sovrin Rocketchat] (https://chat.sovrin.org) to ask questions and participate in discussions.
+You can also join [Sovrin Rocketchat](https://chat.sovrin.org) to ask questions and participate in discussions.
 
 ## Copyright & License
 
