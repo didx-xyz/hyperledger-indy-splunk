@@ -3,6 +3,30 @@ Splunk App to monitor health and metrics for Hyperledger Indy networks.
 
 The outputs from the https://github.com/bcgov/indy-node-monitor repo will be used to feed the Splunk app to enable metrics to be collected from Hyperledger Indy networks.
 
+# Splunk app for Hyperledger Indy
+
+Indy app for Splunk offers an option to visualize _Hyperledger Indy_ metrics data. Splunk Indy helps you to gain deeper security and operational visibility into your Hyperledger Indy infrastructure by monitoring Hyperledger Indy networks.
+* * *
+
+### Documentation
+
+- TBD
+
+## Branches
+
+- `stable` branch on correspond to the last stable app version.
+- `master` branch contains the latest code, be aware of possible bugs on this branch.
+
+### Prerequisites
+1. You will require a DID on the Indy Network you want to monitor with the appropriate permissions to execute the [fetch_monitor.py](https://github.com/bcgov/indy-node-monitor) script against the associated ledger.
+2. At least one __Splunk Enterprise indexer__.
+
+## Installation
+
+| Splunk version | Wazuh version     | Installation                                                   |
+| :------------: | :---------------: | :--------------------------------------------------------------|
+|      8     |       1.0.0       | <xyz> |
+
 ## Upgrade
 
 Remove the app using splunk plugin tool
