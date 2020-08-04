@@ -39,7 +39,7 @@ You can also join [Sovrin Rocketchat](https://chat.sovrin.org) to ask questions 
 
 ## Copyright & License
 
-Copyright (C) 2015-2019 DIDx, PTY LTD.
+Copyright (C) 2019-2020 DIDx, PTY LTD.
 
 This program is free software; you can redistribute it and/or modify it under the terms of the Apache License 2.0 License.
 
