@@ -13,7 +13,7 @@ Hyperledger Indy app for Splunk offers an option to visualize _Hyperledger Indy_
 - `master` branch contains the latest code, be aware of possible bugs on this branch.
 
 ### Prerequisites
-1. You will require a DID on the Indy Network you want to monitor with the appropriate permissions to execute the [fetch_monitor.py](https://github.com/bcgov/indy-node-monitor) script against the associated ledger.
+1. You will require a DID on the Indy Network you want to monitor with the appropriate permissions to execute the [fetch_monitor.py](https://github.com/hyperledger/indy-node-monitor) script against the associated ledger.
 2. At least one __Splunk Enterprise indexer__.
 
 ## Installation
