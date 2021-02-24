@@ -1,3 +1,102 @@
-<dashboard>
+<form>
   <label>Indy Network</label>
-</dashboard>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="indynetwork" searchWhenChanged="true">
+      <label>Select an Indy Network</label>
+      <default>*</default>
+      <search>
+        <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | dedup indynetwork</query>
+        <earliest>-2h@h</earliest>
+        <latest>now</latest>
+      </search>
+      <fieldForLabel>indynetwork</fieldForLabel>
+      <fieldForValue>indynetwork</fieldForValue>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="token_node" searchWhenChanged="true">
+      <label>Node:</label>
+      <choice value="*">ALL</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>name</fieldForLabel>
+      <fieldForValue>name</fieldForValue>
+      <search>
+        <query>index="indy" sourcetype="hyper:indy:json" | dedup name | table name</query>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="time" token="time_token" searchWhenChanged="true">
+      <label>Select timeframe</label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Indy Network Node IP Compliance Overview</title>
+      <chart>
+        <search>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=*| rex field=client-address "tcp://(?&lt;clientip&gt;.*):" | rex field=node-address "tcp://(?&lt;nodeip&gt;.*):" | eval ip_compliance=if(nodeip==clientip, "False", "True") | dedup name | stats count(eval(ip_compliance="True")) AS Compliant,  count(eval(ip_compliance="False")) AS "Not Compliant" by indynetwork</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trellis.splitBy">_aggregation</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Indy Network Node IP Compliance</title>
+      <table>
+        <search>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=client-address "tcp://(?&lt;clientip&gt;.*):" | rex field=node-address "tcp://(?&lt;nodeip&gt;.*):" | table name, clientip, nodeip | eval ip_compliance=if(nodeip==clientip, "No", "Yes")</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>
