@@ -15,6 +15,11 @@ Hyperledger Indy app for Splunk offers an option to visualize _Hyperledger Indy_
 ### Prerequisites
 1. You will require a DID on the Indy Network you want to monitor with the appropriate permissions to execute the [fetch_monitor.py](https://github.com/hyperledger/indy-node-monitor) script against the associated ledger.
 2. At least one __Splunk Enterprise indexer__.
+3. Create a Splunk index called `indy`
+4. Install the `TA_hyperledger_indy` and `SA-Hyperledger-Indy` apps
+5. Configure path in [inputs.conf](SA-Hyperledger-Indy/local/inputs.conf) to match your ledger data location
+6. Restart splunk
+7. Access the Splunk `Hyperledger Indy App`
 
 ## Installation
 
