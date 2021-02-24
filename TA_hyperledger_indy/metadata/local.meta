@@ -1,0 +1,16 @@
+[app/ui]
+version = 8.0.4.1
+modtime = 1598100896.683978000
+
+[app/launcher]
+version = 8.0.4.1
+modtime = 1598100896.685248000
+
+[indexes/test3]
+owner = admin
+version = 8.0.4.1
+modtime = 1598050832.333218000
+
+[app/package/check_for_updates]
+version = 8.0.4.1
+modtime = 1598100896.686327000

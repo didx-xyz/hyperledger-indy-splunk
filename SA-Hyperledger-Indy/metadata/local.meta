@@ -1,0 +1,51 @@
+[app/ui]
+version = 8.0.4.1
+modtime = 1598100940.849636000
+
+[app/launcher]
+version = 8.0.4.1
+modtime = 1598100940.850540000
+
+[views/overview]
+owner = admin
+version = 8.1.2
+modtime = 1614164271.373573000
+
+[indexes/indy]
+owner = admin
+version = 8.0.4.1
+modtime = 1598297737.136630000
+
+[nav/default]
+version = 8.0.4.1
+modtime = 1605248047.298883000
+
+[inputs/monitor%3A%2F%2F%2Fhome%2Fsplunk%2Fsovrin_ledgers_data%2Fstagingnet%2F%2Adetailed.json]
+owner = admin
+version = 8.0.4.1
+modtime = 1600847157.255064000
+
+[inputs/monitor%3A%2F%2F%2Fhome%2Fsplunk%2Fsovrin_ledgers_data%2Fbuildernet%2F%2Adetailed.json]
+owner = admin
+version = 8.0.4.1
+modtime = 1600847217.279547000
+
+[views/indy_nodes]
+owner = admin
+version = 8.1.2
+modtime = 1614164486.921261000
+
+[views/indy_ledger]
+owner = admin
+version = 8.1.2
+modtime = 1614164728.906571000
+
+[views/indy_business]
+owner = admin
+version = 8.0.4.1
+modtime = 1605199184.445199000
+
+[views/indy_network]
+owner = admin
+version = 8.0.4.1
+modtime = 1605248019.927629000

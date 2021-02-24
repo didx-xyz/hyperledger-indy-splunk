@@ -1,0 +1,14 @@
+<nav search_view="search">
+  <view name="overview" default='true' />
+  <view name="indy_network" />  
+  <view name="indy_nodes" />
+  <view name="indy_ledger" />
+  <view name="indy_business" />  
+  <collection label="Others" >
+  	<view name="search" />
+  	<view name="datasets" />
+  	<view name="reports" />
+  	<view name="alerts" />
+  	<view name="dashboards" />
+  </collection>
+</nav>
