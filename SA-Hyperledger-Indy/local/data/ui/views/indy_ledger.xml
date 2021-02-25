@@ -6,7 +6,7 @@
       <default>*</default>
       <search>
         <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | dedup indynetwork</query>
-        <earliest>-2h@h</earliest>
+        <earliest>-7d@h</earliest>
         <latest>now</latest>
       </search>
       <fieldForLabel>indynetwork</fieldForLabel>
@@ -73,8 +73,8 @@
       <chart>
         <search>
           <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | fields "response.result.data.Node_info.Metrics.average-per-second.read-transactions","response.result.data.Node_info.Metrics.average-per-second.write-transactions",indynetwork | search indynetwork=$indynetwork$ | timechart span=1h  avg("response.result.data.Node_info.Metrics.average-per-second.read-transactions") AS "Average reads p/s", avg("response.result.data.Node_info.Metrics.average-per-second.write-transactions") AS "Average writes p/s"  by indynetwork</query>
-          <earliest>-7d@h</earliest>
-          <latest>now</latest>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -305,7 +305,7 @@
       <title>Nodes with Issuer over time</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" "status.ok"=false | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | fields "name", indynetwork | search indynetwork=*| timechart span=1d dc(name) by indynetwork</query>
+          <query>index="indy" sourcetype="hyper:indy:json" "status.ok"=false | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | fields "name", indynetwork | search indynetwork=$indynetwork$ | timechart span=1d dc(name) by indynetwork</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -350,7 +350,7 @@
       <title>Transactions per Indy Network Ledger</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=*  | timechart span=1h max(response.result.data.Node_info.Metrics.transaction-count.config) AS "Config Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.ledger) AS "Main Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.pool) AS "Pool Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.1001) AS "Token Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.audit) AS "Audit Leger TX Count" by indynetwork</query>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$  | timechart span=1h max(response.result.data.Node_info.Metrics.transaction-count.config) AS "Config Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.ledger) AS "Main Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.pool) AS "Pool Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.1001) AS "Token Leger TX Count", max(response.result.data.Node_info.Metrics.transaction-count.audit) AS "Audit Leger TX Count" by indynetwork</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -395,7 +395,7 @@
       <title>Token Ledger Transaction by Indy Network</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=*  | timechart span=1h  max(response.result.data.Node_info.Metrics.transaction-count.1001) AS "Token Leger TX Count" by indynetwork</query>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$  | timechart span=1h  max(response.result.data.Node_info.Metrics.transaction-count.1001) AS "Token Leger TX Count" by indynetwork</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -440,7 +440,7 @@
       <title>Main Ledger Transaction by Indy Network (Log)</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=*  | timechart span=1h avg(response.result.data.Node_info.Metrics.transaction-count.ledger) AS "Main Leger TX Count" by indynetwork</query>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$  | timechart span=1h avg(response.result.data.Node_info.Metrics.transaction-count.ledger) AS "Main Leger TX Count" by indynetwork</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -485,7 +485,7 @@
       <title>Main Ledger Transactions by Indy Network (Log)</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=*  | timechart span=1h avg(response.result.data.Node_info.Metrics.transaction-count.ledger) AS "Main Leger TX Count" by indynetwork</query>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$  | timechart span=1h avg(response.result.data.Node_info.Metrics.transaction-count.ledger) AS "Main Leger TX Count" by indynetwork</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>

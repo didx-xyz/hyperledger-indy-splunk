@@ -6,7 +6,7 @@
       <default>*</default>
       <search>
         <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | dedup indynetwork</query>
-        <earliest>-2h@h</earliest>
+        <earliest>-7d@h</earliest>
         <latest>now</latest>
       </search>
       <fieldForLabel>indynetwork</fieldForLabel>
@@ -39,9 +39,9 @@
       <title>Indy Network Node IP Compliance Overview</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=*| rex field=client-address "tcp://(?&lt;clientip&gt;.*):" | rex field=node-address "tcp://(?&lt;nodeip&gt;.*):" | eval ip_compliance=if(nodeip==clientip, "False", "True") | dedup name | stats count(eval(ip_compliance="True")) AS Compliant,  count(eval(ip_compliance="False")) AS "Not Compliant" by indynetwork</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$ | rex field=client-address "tcp://(?&lt;clientip&gt;.*):" | rex field=node-address "tcp://(?&lt;nodeip&gt;.*):" | eval ip_compliance=if(nodeip==clientip, "False", "True") | dedup name | stats count(eval(ip_compliance="True")) AS Compliant,  count(eval(ip_compliance="False")) AS "Not Compliant" by indynetwork</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -72,6 +72,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -84,15 +85,36 @@
       <title>Indy Network Node IP Compliance</title>
       <table>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=client-address "tcp://(?&lt;clientip&gt;.*):" | rex field=node-address "tcp://(?&lt;nodeip&gt;.*):" | table name, clientip, nodeip | eval ip_compliance=if(nodeip==clientip, "No", "Yes")</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$ | dedup name | rex field=client-address "tcp://(?&lt;clientip&gt;.*):" | rex field=node-address "tcp://(?&lt;nodeip&gt;.*):" | eval ip_compliance=if(nodeip==clientip, "No", "Yes") | table indynetwork, name, ip_compliance, nodeip, clientip</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
         <option name="drilldown">none</option>
         <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Node Status Table</title>
+        <search>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$ | dedup "name" | table _time,indynetwork, "name","status.ok","status.software.indy-node","status.software.sovrin","status.timestamp","status.uptime","status.warnings"</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
         <option name="rowNumbers">false</option>
         <option name="totalsRow">false</option>
         <option name="wrap">true</option>

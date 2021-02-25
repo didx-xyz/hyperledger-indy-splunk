@@ -9,11 +9,20 @@ Hyperledger Indy app for Splunk offers an option to visualize _Hyperledger Indy_
 
 ## Branches
 
-- `stable` branch on correspond to the last stable app version.
 - `master` branch contains the latest code, be aware of possible bugs on this branch.
 
 ### Prerequisites
-1. You will require a DID on the Indy Network you want to monitor with the appropriate permissions to execute the [fetch_monitor.py](https://github.com/hyperledger/indy-node-monitor) script against the associated ledger.
+1. Use the [fetch_monitor.py](https://github.com/hyperledger/indy-node-monitor/blob/master/fetch-validator-status/fetch_status.py) script from the [indy-node-monitor](https://github.com/hyperledger/indy-node-monitor) repository to fetch data from indy networks
+
+1a. You will require a `NETWORK_MONITOR` DID on the associated Indy Network to extract detailed and status information from the [fetch_monitor.py](https://github.com/hyperledger/indy-node-monitor/blob/master/fetch-validator-status/fetch_status.py) script.
+Anonymous information can be extracted as per the example in 1d. below.
+   
+1b. An example `cron` job to fetch detailed validator info every ten minutes ``*/10 * * * * root /home/splunk/indy-node-monitor/fetch-validator-status/run.sh --net=smn --seed=<NETWORK_MONITOR DID SEED> > /home/splunk/indy_ledgers_data/mainnet/`date "+\%Y-\%m-\%d_\%H:\%M:\%S"`_mainnet_detailed.json``
+
+1c. An example `cron` job to fetch status validator info every ten minutes ``*/10 * * * * root /home/splunk/indy-node-monitor/fetch-validator-status/run.sh --net=smn --status --seed=<NETWORK_MONITOR DID SEED> > /home/splunk/indy_ledgers_data/mainnet/`date "+\%Y-\%m-\%d_\%H:\%M:\%S"`_mainnet_status.json``
+
+1d. An example `cron` job to fetch anonymous validator info every ten minutes ``*/10 * * * * root /home/splunk/indy-node-monitor/fetch-validator-status/run.sh --net=smn --anonymous > /home/splunk/indy_ledgers_data/mainnet/`date "+\%Y-\%m-\%d_\%H:\%M:\%S"`_mainnet_anon.json``
+
 2. At least one __Splunk Enterprise indexer__.
 3. Create a Splunk index called `indy`
 4. Install the `TA_hyperledger_indy` and `SA-Hyperledger-Indy` apps
@@ -27,20 +36,10 @@ Hyperledger Indy app for Splunk offers an option to visualize _Hyperledger Indy_
 | :------------: | :---------------: | :--------------------------------------------------------------|
 |      8     |       1.0.0       | <xyz> |
 
-## Upgrade
-
-Remove the app using splunk plugin tool
-
-    $SPLUNK_HOME/bin/splunk remove app SplunkAppForIndy
-
-Install the app
-
-     $SPLUNK_HOME/bin/splunk install app <last package file>
-
 ## Contribute
 
 If you want to contribute to our project please don't hesitate to send a pull request. 
-You can also join [Sovrin Rocketchat](https://chat.sovrin.org) to ask questions and participate in discussions.
+You can also join [DIDx Slack](https://join.slack.com/t/didx-xyz/shared_invite/zt-madh6xua-TzkbEWmqRhhFvag8WUPUxQ) to ask questions and participate in discussions.
 
 ## Copyright & License
 
@@ -62,6 +61,5 @@ Find more information about this on the [LICENSE](LICENSE) file.
 
 ## References
 
--   [DIDx website](https://www.didx.xyz)
 -   [Hyperledger Indy](https://www.hyperledger.org/use/hyperledger-indy)
 -   [Splunk documentation](http://docs.splunk.com/Documentation)

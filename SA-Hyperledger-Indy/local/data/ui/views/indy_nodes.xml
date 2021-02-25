@@ -6,7 +6,7 @@
       <default>*</default>
       <search>
         <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | dedup indynetwork</query>
-        <earliest>-2h@h</earliest>
+        <earliest>-7d@h</earliest>
         <latest>now</latest>
       </search>
       <fieldForLabel>indynetwork</fieldForLabel>
@@ -81,7 +81,7 @@
       <title>Healthy Node Count</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | fields name,indynetwork | search indynetwork=$indynetwork$  | stats dc(name) by indynetwork</query>
+          <query>index="indy" sourcetype="hyper:indy:json" status.ok=true | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | fields name,indynetwork | search indynetwork=$indynetwork$  | stats dc(name) by indynetwork</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -100,7 +100,7 @@
       <title>Nodes with Errors Count</title>
       <chart>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | fields name,indynetwork | search indynetwork=$indynetwork$  | stats dc(name) by indynetwork</query>
+          <query>index="indy" sourcetype="hyper:indy:json" status.ok=false | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | fields name,indynetwork | search indynetwork=$indynetwork$  | stats dc(name) by indynetwork</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -144,9 +144,9 @@
       <single>
         <title>Nr of Nodes:</title>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | stats count dc(name) as Nodes | table Nodes</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$ | stats count dc(name) as Nodes | table Nodes</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="colorBy">value</option>
@@ -172,9 +172,9 @@
       <single>
         <title>Nodes with unreachable nodes</title>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" "response.result.data.Pool_info.Unreachable_nodes_count"&gt;0 | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | stats dc(name)</query>
-          <earliest>-4h@m</earliest>
-          <latest>now</latest>
+          <query>index="indy" sourcetype="hyper:indy:json" "response.result.data.Pool_info.Unreachable_nodes_count"&gt;0 | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$ | stats dc(name)</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="drilldown">all</option>
@@ -190,7 +190,7 @@
       <chart>
         <title>Total Nodes for each Host</title>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/"| timechart limit=25 useother=f minspan=1h values(response.result.data.Pool_info.Total_nodes_count) by name</query>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/"| search indynetwork=$indynetwork$ | timechart limit=25 useother=f minspan=1h values(response.result.data.Pool_info.Total_nodes_count) by name</query>
           <earliest>-4h@m</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -235,9 +235,9 @@
       <chart>
         <title>Reachable Nodes Count by Host</title>
         <search>
-          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | timechart limit=25 useother=f minspan=1h values(response.result.data.Pool_info.Reachable_nodes_count) by name</query>
-          <earliest>-4h@m</earliest>
-          <latest>now</latest>
+          <query>index="indy" sourcetype="hyper:indy:json" | rex field=source ".*/(?&lt;indynetwork&gt;.*)/" | search indynetwork=$indynetwork$ | timechart limit=25 useother=f minspan=1h values(response.result.data.Pool_info.Reachable_nodes_count) by name</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
