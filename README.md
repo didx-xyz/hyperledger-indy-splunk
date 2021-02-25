@@ -15,6 +15,7 @@ Hyperledger Indy app for Splunk offers an option to visualize _Hyperledger Indy_
 1. Use the [run.sh](https://github.com/hyperledger/indy-node-monitor/blob/master/fetch-validator-status/run.sh) script from the [indy-node-monitor](https://github.com/hyperledger/indy-node-monitor) repository to fetch data from indy networks.
 
 Replace <user> with your `cron` job system user name and <indynetworkname> with your indy network name. i.e. buildernet, stagingnet... 
+**NOTE** <indynetworkname> is used by the Splunk app to extract the name of the indy network network. 
 
 1a. You will require a `NETWORK_MONITOR` DID on the associated Indy Network to extract detailed and status information from the [fetch_monitor.py](https://github.com/hyperledger/indy-node-monitor/blob/master/fetch-validator-status/fetch_status.py) script.
 Anonymous information can be extracted as per the example in 1d. below.
